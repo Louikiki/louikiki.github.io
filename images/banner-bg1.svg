@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900">
+  <defs>
+    <linearGradient id="g1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f1e3a"/>
+      <stop offset="50%" stop-color="#1f4d7a"/>
+      <stop offset="100%" stop-color="#12345a"/>
+    </linearGradient>
+    <radialGradient id="r1" cx="30%" cy="30%" r="60%">
+      <stop offset="0%" stop-color="#5fa8d3" stop-opacity="0.6"/>
+      <stop offset="100%" stop-color="#5fa8d3" stop-opacity="0"/>
+    </radialGradient>
+    <style>
+      .float-circle { animation: floatCircle 8s ease-in-out infinite; }
+      .float-wave { animation: floatWave 6s ease-in-out infinite; }
+      @keyframes floatCircle {
+        0%, 100% { transform: translateY(0px) translateX(0px); }
+        25% { transform: translateY(-8px) translateX(4px); }
+        50% { transform: translateY(-4px) translateX(-2px); }
+        75% { transform: translateY(-12px) translateX(6px); }
+      }
+      @keyframes floatWave {
+        0%, 100% { transform: translateY(0px) translateX(0px); }
+        33% { transform: translateY(-6px) translateX(3px); }
+        66% { transform: translateY(-3px) translateX(-2px); }
+      }
+    </style>
+  </defs>
+  <rect width="1600" height="900" fill="url(#g1)"/>
+  <circle class="float-circle" cx="400" cy="250" r="320" fill="url(#r1)"/>
+  <circle class="float-circle" cx="1250" cy="680" r="260" fill="url(#r1)" opacity="0.7"/>
+  <path class="float-wave" d="M0 640 C400 520 650 620 1100 520 C1350 470 1500 430 1600 380 L1600 900 L0 900 Z" fill="#82c4e850"/>
+  <path class="float-wave" d="M0 720 C420 610 760 690 1200 600 C1400 560 1560 520 1600 500 L1600 900 L0 900 Z" fill="#ffffff10"/>
+</svg>

@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900">
+  <defs>
+    <linearGradient id="g3" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#0d2038"/>
+      <stop offset="50%" stop-color="#1f456a"/>
+      <stop offset="100%" stop-color="#162c4a"/>
+    </linearGradient>
+    <radialGradient id="flare3" cx="70%" cy="20%" r="50%">
+      <stop offset="0%" stop-color="#4fa3d1" stop-opacity="0.7"/>
+      <stop offset="100%" stop-color="#4fa3d1" stop-opacity="0"/>
+    </radialGradient>
+    <style>
+      .float-circle { animation: floatCircle 9s ease-in-out infinite; }
+      .float-wave { animation: floatWave 8s ease-in-out infinite; }
+      @keyframes floatCircle {
+        0%, 100% { transform: translateY(0px) translateX(0px); }
+        25% { transform: translateY(-6px) translateX(2px); }
+        50% { transform: translateY(-9px) translateX(-3px); }
+        75% { transform: translateY(-4px) translateX(5px); }
+      }
+      @keyframes floatWave {
+        0%, 100% { transform: translateY(0px) translateX(0px); }
+        33% { transform: translateY(-7px) translateX(2px); }
+        66% { transform: translateY(-4px) translateX(-3px); }
+      }
+    </style>
+  </defs>
+  <rect width="1600" height="900" fill="url(#g3)"/>
+  <rect width="1600" height="900" fill="url(#flare3)"/>
+  <path class="float-wave" d="M0 760 C260 700 520 760 840 700 C1180 630 1380 660 1600 620 L1600 900 L0 900 Z" fill="#ffffff12"/>
+  <path class="float-wave" d="M0 560 C260 520 520 560 840 500 C1180 430 1380 460 1600 420 L1600 900 L0 900 Z" fill="#7bbce550"/>
+  <circle class="float-circle" cx="180" cy="620" r="240" fill="#5caee0" opacity="0.18"/>
+  <circle class="float-circle" cx="1380" cy="760" r="180" fill="#5caee0" opacity="0.12"/>
+</svg>
