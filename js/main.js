@@ -377,6 +377,7 @@ function initIndustryPagination() {
     if (items.length <= pageSize) return; // 不足一页时不显示分页
 
     let currentPage = 1;
+    let pagination;
 
     const renderPage = (page) => {
         currentPage = page;
@@ -386,15 +387,26 @@ function initIndustryPagination() {
             item.style.display = index >= start && index < end ? '' : 'none';
         });
 
-        const buttons = pagination.querySelectorAll('.industry-page-btn');
-        buttons.forEach(btn => {
-            const pageNum = parseInt(btn.getAttribute('data-page'), 10);
-            btn.classList.toggle('active', pageNum === currentPage);
-        });
+        if (pagination) {
+            const buttons = pagination.querySelectorAll('.industry-page-btn');
+            buttons.forEach(btn => {
+                const pageNum = parseInt(btn.getAttribute('data-page'), 10);
+                btn.classList.toggle('active', pageNum === currentPage);
+                
+                // 禁用超出范围的导航按钮
+                if (btn.classList.contains('nav')) {
+                    if ((btn.textContent === '上一页' && currentPage === 1) || 
+                        (btn.textContent === '下一页' && currentPage === totalPages)) {
+                        btn.disabled = true;
+                        btn.classList.add('disabled');
+                    } else {
+                        btn.disabled = false;
+                        btn.classList.remove('disabled');
+                    }
+                }
+            });
+        }
     };
-
-    const pagination = document.createElement('div');
-    pagination.className = 'industry-pagination';
 
     const createPageButton = (label, page, isNav = false) => {
         const btn = document.createElement('button');
@@ -402,15 +414,41 @@ function initIndustryPagination() {
         btn.textContent = label;
         btn.className = isNav ? 'industry-page-btn nav' : 'industry-page-btn';
         btn.setAttribute('data-page', page);
+        
+        // 初始禁用超出范围的导航按钮
+        if (isNav) {
+            if ((label === '上一页' && page < 1) || (label === '下一页' && page > totalPages)) {
+                btn.disabled = true;
+                btn.classList.add('disabled');
+            }
+        }
+        
         btn.addEventListener('click', () => {
-            if (page < 1 || page > totalPages || page === currentPage) return;
-            renderPage(page);
+            let targetPage;
+            if (isNav) {
+                // 导航按钮根据当前页面计算目标页码
+                if (label === '上一页') {
+                    targetPage = currentPage - 1;
+                } else if (label === '下一页') {
+                    targetPage = currentPage + 1;
+                }
+            } else {
+                // 数字按钮直接使用data-page值
+                targetPage = parseInt(btn.getAttribute('data-page'), 10);
+            }
+            
+            if (targetPage < 1 || targetPage > totalPages || targetPage === currentPage) return;
+            renderPage(targetPage);
         });
         return btn;
     };
 
+    // 创建分页容器
+    pagination = document.createElement('div');
+    pagination.className = 'industry-pagination';
+
     // 上一页
-    pagination.appendChild(createPageButton('上一页', currentPage - 1, true));
+    pagination.appendChild(createPageButton('上一页', 0, true));
 
     // 数字页码
     for (let i = 1; i <= totalPages; i++) {
@@ -418,7 +456,7 @@ function initIndustryPagination() {
     }
 
     // 下一页
-    pagination.appendChild(createPageButton('下一页', currentPage + 1, true));
+    pagination.appendChild(createPageButton('下一页', totalPages + 1, true));
 
     list.parentNode.appendChild(pagination);
 
